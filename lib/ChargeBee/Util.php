@@ -4,13 +4,15 @@ class ChargeBee_Util
 {
 
 	static function toCamelCaseFromUnderscore($str) {
-		$func = create_function('$c', 'return strtoupper($c[1]);');
-		return preg_replace_callback('/_([a-z])/', $func, $str);
+		return preg_replace_callback('/_([a-z])/', function($match) {
+			return strtoupper($match[1]);
+		}, $str);
 	}
 
 	static function toUnderscoreFromCamelCase($str) {
-		$func = create_function('$c', 'return "_" . strtolower($c[1]);');
-		return preg_replace_callback('/([A-Z])/', $func, $str);
+		return preg_replace_callback('/([A-Z])/', function($match) {
+			return '_'.strtolower($match[1]);
+		}, $str);
 	}
 
 	static function serialize($value, $prefix=NULL, $idx=NULL)
